@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/vuniswap/static/css/main.797d0e06.chunk.css",
+    "main.js": "/vuniswap/static/js/main.74b378bf.chunk.js",
+    "main.js.map": "/vuniswap/static/js/main.74b378bf.chunk.js.map",
+    "runtime-main.js": "/vuniswap/static/js/runtime-main.624e6edb.js",
+    "runtime-main.js.map": "/vuniswap/static/js/runtime-main.624e6edb.js.map",
+    "static/css/2.52d11be5.chunk.css": "/vuniswap/static/css/2.52d11be5.chunk.css",
+    "static/js/2.250134aa.chunk.js": "/vuniswap/static/js/2.250134aa.chunk.js",
+    "static/js/2.250134aa.chunk.js.map": "/vuniswap/static/js/2.250134aa.chunk.js.map",
+    "static/js/3.297877a0.chunk.js": "/vuniswap/static/js/3.297877a0.chunk.js",
+    "static/js/3.297877a0.chunk.js.map": "/vuniswap/static/js/3.297877a0.chunk.js.map",
+    "index.html": "/vuniswap/index.html",
+    "static/css/2.52d11be5.chunk.css.map": "/vuniswap/static/css/2.52d11be5.chunk.css.map",
+    "static/css/main.797d0e06.chunk.css.map": "/vuniswap/static/css/main.797d0e06.chunk.css.map",
+    "static/js/2.250134aa.chunk.js.LICENSE.txt": "/vuniswap/static/js/2.250134aa.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.624e6edb.js",
+    "static/css/2.52d11be5.chunk.css",
+    "static/js/2.250134aa.chunk.js",
+    "static/css/main.797d0e06.chunk.css",
+    "static/js/main.74b378bf.chunk.js"
+  ]
+}
