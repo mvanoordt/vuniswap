@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/vuniswap/static/css/main.797d0e06.chunk.css",
-    "main.js": "/vuniswap/static/js/main.74b378bf.chunk.js",
-    "main.js.map": "/vuniswap/static/js/main.74b378bf.chunk.js.map",
+    "main.js": "/vuniswap/static/js/main.f5e9470f.chunk.js",
+    "main.js.map": "/vuniswap/static/js/main.f5e9470f.chunk.js.map",
     "runtime-main.js": "/vuniswap/static/js/runtime-main.624e6edb.js",
     "runtime-main.js.map": "/vuniswap/static/js/runtime-main.624e6edb.js.map",
     "static/css/2.52d11be5.chunk.css": "/vuniswap/static/css/2.52d11be5.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.52d11be5.chunk.css",
     "static/js/2.250134aa.chunk.js",
     "static/css/main.797d0e06.chunk.css",
-    "static/js/main.74b378bf.chunk.js"
+    "static/js/main.f5e9470f.chunk.js"
   ]
 }
