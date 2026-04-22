@@ -9,6 +9,7 @@ import { Swap } from "./components/Swap.jsx";
 import { AddLiquidity } from "./components/AddLiquidity.jsx";
 import { RemoveLiquidity } from "./components/RemoveLiquidity.jsx";
 import { CreatePoolNotice } from "./components/CreatePool.jsx";
+import { Activity } from "./components/Activity.jsx";
 
 export default function App() {
   const {
@@ -59,17 +60,49 @@ export default function App() {
     loadLp();
   }, [pairContract, account]);
 
+  useEffect(() => {
+    if (!window.ethereum) return;
+
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        disconnectWallet();
+      } else {
+        connectWallet();
+      }
+    };
+
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+
+    return () => {
+      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+    };
+  }, [connectWallet, disconnectWallet]);
+
+  useEffect(() => {
+    if (!window.ethereum) return;
+
+    const handleChainChanged = () => {
+      window.location.reload();
+    };
+
+    window.ethereum.on("chainChanged", handleChainChanged);
+
+    return () => {
+      window.ethereum.removeListener("chainChanged", handleChainChanged);
+    };
+  }, []);
+
   const sameToken =
     tokenA?.address &&
     tokenB?.address &&
     tokenA.address.toLowerCase() === tokenB.address.toLowerCase();
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-6">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-6">
       <div className="card w-full max-w-xl p-5">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <div className="text-lg font-semibold text-slate-50">VUniswap</div>
+            <div className="text-lg font-semibold text-slate-50">VUniswap 2026</div>
           </div>
           <div>
             {account ? (
@@ -121,6 +154,16 @@ export default function App() {
             }`}
           >
             Liquidity
+          </button>
+          <button
+            onClick={() => setScreen("activity")}
+            className={`px-3 py-1 rounded-full text-xs font-medium ${
+              screen === "activity"
+                ? "bg-slate-50 text-slate-900 shadow-sm"
+                : "text-slate-300"
+            }`}
+          >
+            Activity
           </button>
         </div>
 
@@ -223,12 +266,25 @@ export default function App() {
             </>
           )}
 
+          {screen === "activity" && (
+            <Activity
+              pairContract={pairContract}
+              tokenA={tokenA}
+              tokenB={tokenB}
+              provider={provider}
+            />
+          )}
+
           {(!tokenA || !tokenB) && (
             <div className="mt-4 text-center text-xs text-slate-500">
-              Select Token X and Token Y to view pool info, swap, and liquidity options.
+              Select Token X and Token Y to view pool info, swap, liquidity, and activity data.
             </div>
           )}
         </div>
+      </div>
+
+      <div className="mt-3 text-[9px] text-center text-slate-600">
+        Disclaimer: Educational platform on the Ethereum Sepolia testnet.
       </div>
     </div>
   );

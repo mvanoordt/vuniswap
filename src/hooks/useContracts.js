@@ -20,7 +20,7 @@ export function useContracts() {
     const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
     const network = await web3Provider.getNetwork();
     if (network.chainId !== SEPOLIA_CHAIN_ID) {
-      alert("Please switch MetaMask to Sepolia");
+      console.warn("Not on Sepolia; auto-switch effect will try to correct this.");
     }
 
     const accounts = await web3Provider.send("eth_requestAccounts", []);
@@ -44,8 +44,67 @@ export function useContracts() {
     setFactory(null);
   }
 
+  // Auto-connect if MetaMask already authorized
   useEffect(() => {
-    // No auto-connect; user uses Connect Wallet button
+    async function tryAutoConnect() {
+      if (!window.ethereum) return;
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts"
+        });
+        if (accounts && accounts.length > 0) {
+          await connectWallet();
+        }
+      } catch (e) {
+        console.error("Auto-connect failed:", e);
+      }
+    }
+    tryAutoConnect();
+  }, []);
+
+  // Auto-switch to Sepolia (and auto-add if missing)
+  useEffect(() => {
+    async function ensureSepolia() {
+      if (!window.ethereum) return;
+
+      try {
+        const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+        if (chainId === "0xaa36a7") return; // already Sepolia
+
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0xaa36a7" }]
+        });
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: "0xaa36a7",
+                  chainName: "Sepolia Test Network",
+                  nativeCurrency: {
+                    name: "Sepolia ETH",
+                    symbol: "ETH",
+                    decimals: 18
+                  },
+                  rpcUrls: ["https://rpc.sepolia.org"],
+                  blockExplorerUrls: ["https://sepolia.etherscan.io"]
+                }
+              ]
+            });
+          } catch (addError) {
+            console.error("Failed to add Sepolia:", addError);
+          }
+        } else {
+          console.error("Failed to switch network:", switchError);
+        }
+      }
+    }
+
+    ensureSepolia();
   }, []);
 
   return { provider, signer, account, router, factory, connectWallet, disconnectWallet };

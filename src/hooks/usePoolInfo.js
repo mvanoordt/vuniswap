@@ -37,7 +37,7 @@ export function usePoolInfo(pairContract, tokenA, tokenB) {
     if (!pairContract || !tokenA || !tokenB) return;
     const interval = setInterval(() => {
       load();
-    }, 3000); // 3 seconds
+    }, 3000);
     return () => clearInterval(interval);
   }, [pairContract, tokenA, tokenB]);
 
